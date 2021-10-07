@@ -1,0 +1,78 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Create New Course
+                    <blockquote class="blockquote">
+                        <footer class="blockquote-footer">New course for college.</footer>
+                    </blockquote>
+                </div>
+
+                <div class="card-body">
+                    @if(\Session::has('success'))
+                        <div class="alert alert-success">
+                            {{ \Session::get('success') }}
+                        </div>
+                    @endif
+                    <form action="/c" method="post">
+                        @csrf
+
+                        <div class="form-group">
+                            <label for="name">Course Name</label>
+                            <input id="name" type="text" class="form-control text-uppercase @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
+
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course_code">Course Code</label>
+                            <the-mask mask="A#X" type="text" masked="true" id="course_code" type="text" class="form-control @error('course_code') is-invalid @enderror" name="course_code" value="{{ old('course_code') }}" required></the-mask>
+
+                            @error('course_code')
+                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                            @enderror
+                        </div>
+
+                        <button class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Step by Step</div>
+
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>Enter batch according to the following format
+                            <ul>
+                                <li><code>1/{{--$thisYear--}}</code> or</li>
+                                <li><code>2/{{--$thisYear--}}</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled">
+                        <li><strong>Important</strong></li>
+                        <li><code>1</code> or <code>2</code>  in the batch represents when the batch will start and end</li>
+                    </ul>
+                    <ul class="list-unstyled">
+                        <li><code>1</code> starting from January {{--$thisYear--}} to June {{--$nextYear--}}</li>
+                        <li><code>2</code> starting from July {{--$thisYear--}} to December {{--$nextYear--}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
